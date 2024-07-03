@@ -1,0 +1,99 @@
+import { error, json } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import { User, createSession, createUser } from '$lib/server/db';
+
+const GITHUB_TOKEN_ACCESS_URL = 'https://github.com/login/oauth/access_token';
+const GITHUB_CLIENT_SECRET = '3e227e5ff3ab9dadfe879817acb2d0afffff7978';
+const GITHUB_CLIENT_ID = 'Ov23liZxB5WZVqEt7Gja';
+
+const DISCORD_TOKEN_ACCESS_URL = 'https://discord.com/api/oauth2/token';
+const DISCORD_CLIENT_SECRET = 'LCyxP4lZFZlX_jDNz2h1jpHPTtlm1FXZ';
+const DISCORD_CLIENT_ID = '1257846856717832332';
+
+export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => {
+	const body = await request.text()
+	if (typeof body !== "string") return error(400, "invalid body")
+	const data = new URLSearchParams(body)
+	const oauthMethod = data.get('oauth_method');
+	const code = data.get('code');
+	if (!(typeof code === 'string')) return error(400, 'missing code');
+	if (oauthMethod === 'github') {
+		const githubTokenAccessUrl = new URL(GITHUB_TOKEN_ACCESS_URL);
+		githubTokenAccessUrl.searchParams.append('code', code);
+		githubTokenAccessUrl.searchParams.append('client_secret', GITHUB_CLIENT_SECRET);
+		githubTokenAccessUrl.searchParams.append('client_id', GITHUB_CLIENT_ID);
+		githubTokenAccessUrl.searchParams.append('redirect_uri', url.origin + '/login/github');
+
+		const response = await fetch(githubTokenAccessUrl, { method: 'POST' });
+		const data = await response.text();
+		const params = new URLSearchParams(data)
+		const token = params.get("access_token");
+		const errorType = params.get("error");
+		const errorDescription = params.get("error_description");
+		
+		if (errorType && errorDescription) {
+			return error(400, errorDescription)
+		}
+		if (token) {
+			const response = await fetch('https://api.github.com/user', {
+				headers: {
+					Accept: "application/vnd.github.v3+json",
+					// Include the token in the Authorization header
+					Authorization: 'token ' + token
+				}
+			});
+			const user = await response.json();
+			const username = user.login;
+			// console.log(user.avatar_url);
+			// user.email
+
+      const userSuccess = await createUser(username, "github");
+			if (userSuccess) {
+				await createSession(cookies, username);
+			}
+      return json({ ok: userSuccess });
+		}
+
+    return json(data);
+    
+	} else if (oauthMethod === 'discord') {
+		const discordTokenAccessUrl = new URL(DISCORD_TOKEN_ACCESS_URL);
+		const params = new URLSearchParams();
+		params.append('client_id', DISCORD_CLIENT_ID);
+		params.append('client_secret', DISCORD_CLIENT_SECRET);
+		params.append('grant_type', 'authorization_code');
+		params.append('code', code);
+		params.append('redirect_uri', url.origin + '/login/discord');
+
+		const response = await fetch(discordTokenAccessUrl, {
+			method: 'POST',
+			body: params,
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		});
+		const data = await response.json();
+    if (data.error) {
+      return error(400, data.error_description)
+    }
+		const token = data.access_token;
+    
+		if (token) {
+			const response = await fetch('https://discord.com/api/users/@me', {
+				headers: {
+					authorization: `Bearer ${token}`
+				}
+			});
+			const user = await response.json();
+			const { username } = user;
+			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.id}.png`;
+      
+      const userSuccess = await createUser(username, "discord");
+			if (userSuccess) {
+				await createSession(cookies, username);
+			}
+      return json({ ok: userSuccess });
+		}
+	}
+	return json({});
+};
