@@ -8,6 +8,5 @@ todo:
 - Admin/Mod Power
 - Commenting on ideas
 - Linking Github PRs
-- Add Scratch Auth
 - Link multiple accounts thru settings
 - Search

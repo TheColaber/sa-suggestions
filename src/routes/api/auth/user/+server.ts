@@ -11,9 +11,9 @@ const DISCORD_CLIENT_SECRET = 'LCyxP4lZFZlX_jDNz2h1jpHPTtlm1FXZ';
 const DISCORD_CLIENT_ID = '1257846856717832332';
 
 export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => {
-	const body = await request.text()
-	if (typeof body !== "string") return error(400, "invalid body")
-	const data = new URLSearchParams(body)
+	const body = await request.text();
+	if (typeof body !== 'string') return error(400, 'invalid body');
+	const data = new URLSearchParams(body);
 	const oauthMethod = data.get('oauth_method');
 	const code = data.get('code');
 	if (!(typeof code === 'string')) return error(400, 'missing code');
@@ -26,18 +26,18 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 
 		const response = await fetch(githubTokenAccessUrl, { method: 'POST' });
 		const data = await response.text();
-		const params = new URLSearchParams(data)
-		const token = params.get("access_token");
-		const errorType = params.get("error");
-		const errorDescription = params.get("error_description");
-		
+		const params = new URLSearchParams(data);
+		const token = params.get('access_token');
+		const errorType = params.get('error');
+		const errorDescription = params.get('error_description');
+
 		if (errorType && errorDescription) {
-			return error(400, errorDescription)
+			return error(400, errorDescription);
 		}
 		if (token) {
 			const response = await fetch('https://api.github.com/user', {
 				headers: {
-					Accept: "application/vnd.github.v3+json",
+					Accept: 'application/vnd.github.v3+json',
 					// Include the token in the Authorization header
 					Authorization: 'token ' + token
 				}
@@ -47,15 +47,14 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			// console.log(user.avatar_url);
 			// user.email
 
-      const userSuccess = await createUser(username, "github");
+			const userSuccess = await createUser(username, 'github');
 			if (userSuccess) {
 				await createSession(cookies, username);
 			}
-      return json({ ok: userSuccess });
+			return json({ ok: userSuccess });
 		}
 
-    return json(data);
-    
+		return json(data);
 	} else if (oauthMethod === 'discord') {
 		const discordTokenAccessUrl = new URL(DISCORD_TOKEN_ACCESS_URL);
 		const params = new URLSearchParams();
@@ -73,11 +72,11 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			}
 		});
 		const data = await response.json();
-    if (data.error) {
-      return error(400, data.error_description)
-    }
+		if (data.error) {
+			return error(400, data.error_description);
+		}
 		const token = data.access_token;
-    
+
 		if (token) {
 			const response = await fetch('https://discord.com/api/users/@me', {
 				headers: {
@@ -87,13 +86,27 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			const user = await response.json();
 			const { username } = user;
 			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.id}.png`;
-      
-      const userSuccess = await createUser(username, "discord");
+
+			const userSuccess = await createUser(username, 'discord');
 			if (userSuccess) {
 				await createSession(cookies, username);
 			}
-      return json({ ok: userSuccess });
+			return json({ ok: userSuccess });
 		}
+	} else if (oauthMethod === 'scratch') {
+		const response = await fetch(
+			`https://api.scratch.mit.edu/studios/33639910/comments?offset=0&limit=40&timestamp=${Date.now()}`
+		);
+		const comments = await response.json();
+		const codeComment = comments.find(({ content }: { content: string }) => content.includes(code));
+		if (!codeComment) return error(400, 'could not find comment');
+		const username = codeComment.author.username;
+		// codeComment.author.image
+		const userSuccess = await createUser(username, 'scratch');
+		if (userSuccess) {
+			await createSession(cookies, username);
+		}
+		return json({ ok: userSuccess });
 	}
 	return json({});
 };

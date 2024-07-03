@@ -1,14 +1,14 @@
 import type { Cookies } from "@sveltejs/kit";
+import { MONGODB_USER, MONGODB_PASS } from '$env/static/private';
 import mongoose from "mongoose";
 import { Session } from "./schemas/session"
 import { Idea } from "./schemas/idea"
 import { User } from "./schemas/user"
-
-import { MONGODB_USER, MONGODB_PASS } from '$env/static/private';
+import { ScratchToken } from "./schemas/scratch-token";
 
 mongoose.connect(`mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@sa-suggestions.jitrni9.mongodb.net/?retryWrites=true&w=majority&appName=SA-Suggestions`)
 
-export { User, Session, Idea };
+export { User, Session, Idea, ScratchToken };
 
 export async function createUser(username: string, oauthMethod: string) {
   const existingUser = await User.findOne({ username: {$regex: new RegExp(username, "i")} });
@@ -20,7 +20,7 @@ export async function createUser(username: string, oauthMethod: string) {
     return false;
   }
   const newUser = new User({
-    oauthMethods: ["github"],
+    oauthMethods: [oauthMethod],
     username
   })
   await newUser.save();

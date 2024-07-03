@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-
+	import { page } from '$app/stores';  
+	 
 	export let data: PageData;
 
 	let showProfileDropdown = false;
@@ -35,20 +36,24 @@
 			<slot />
 		</div>
 	{:else}
-		<div class="login-options" data-sveltekit-preload-data="false">
-			<a href="/login/github" class="github">
-				<img src="/github.svg" alt="" />
-				<span>Login with Github</span>
-			</a>
-			<a href="/login/discord" class="discord">
-				<img src="/discord.svg" alt="" />
-				<span>Login With Discord</span>
-			</a>
-			<a href="/login/scratch" class="scratch">
-				<img src="/scratch.svg" alt="" />
-				<span>Login with Scratch</span>
-			</a>
-		</div>
+	{#if $page.url.pathname === "/login/scratch"}
+		<slot />
+	{:else}
+	<div class="login-options" data-sveltekit-preload-data="false">
+		<a href="/login/github" class="github">
+			<img src="/github.svg" alt="" />
+			<span>Login with Github</span>
+		</a>
+		<a href="/login/discord" class="discord">
+			<img src="/discord.svg" alt="" />
+			<span>Login With Discord</span>
+		</a>
+		<a href="/login/scratch" class="scratch">
+			<img src="/scratch.svg" alt="" />
+			<span>Login with Scratch</span>
+		</a>
+	</div>
+{/if}
 	{/if}
 </div>
 
@@ -67,6 +72,9 @@
 			display: flex;
 			width: 100%;
 			justify-content: center;
+			flex-direction: column;
+			gap: 15px;
+			align-items: center;
 		}
 
 		.header {
