@@ -1,7 +1,11 @@
 <script lang="ts">
 	export let idea: any;
 
+  let timeout = Date.now();
+
 	async function toggleUpvote(idea: any) {
+    if (Date.now() - timeout < 100) return;
+    timeout = Date.now()
     const newValue = !idea.selfUpvoted;
 		fetch('/api/ideas/' + idea.id + '/upvote', {
 			method: 'POST',

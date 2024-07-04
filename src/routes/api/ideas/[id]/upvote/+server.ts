@@ -11,7 +11,9 @@ export const POST: RequestHandler = async ({ locals, request, params }) => {
 	const idea = await Idea.findOne({ _id: id });
 	if (!idea) return error(404, 'not exist');
 	if (value === true) {
-		idea.upvotes.push(username);
+    if (!idea.upvotes.includes(username)) {
+      idea.upvotes.push(username);
+    }
 	} else {
 		idea.upvotes.splice(idea.upvotes.indexOf(username), 1);
 	}
