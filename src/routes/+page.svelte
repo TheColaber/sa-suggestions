@@ -39,12 +39,19 @@
 		align-items: center;
 		gap: 15px;
 		width: min(800px, 100%);
+		height: fit-content;
+		padding: 0px 20px 20px 20px;
 
 		.options {
 			display: flex;
 			width: 100%;
 			justify-content: space-between;
 			gap: 10px;
+			position: sticky;
+			top: 0;
+			background: #1e1e1e;
+			z-index: 1;
+			padding: 20px;
 
 			.search {
 				font-size: 24px;

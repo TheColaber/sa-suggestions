@@ -57,7 +57,7 @@
 
 <style lang="scss">
 	.main {
-		min-height: 100vh;
+		height: 100vh;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -65,11 +65,11 @@
 		color: #fff;
 
 		.content {
-			padding: 20px;
 			box-sizing: border-box;
 			display: flex;
 			width: 100%;
 			justify-content: center;
+			overflow-y: auto;
 		}
 
 		.header {
@@ -97,10 +97,10 @@
 			justify-content: center;
 			background-color: #ff7b26;
 			width: 100%;
+			gap: 15px;
 
 			a,
 			.dropdown-container {
-				width: 150px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -118,6 +118,7 @@
 				background: none;
 				font-family: inherit;
 				border: none;
+				padding: 0px 10px;
 
 				&:hover {
 					background-color: #00000022;
