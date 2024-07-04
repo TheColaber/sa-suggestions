@@ -10,6 +10,12 @@ const SessionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		default: () => crypto.randomUUID()
+	},
+	createdAt: {
+		type: Date,
+		// 7 Days
+		expires: 1000 * 60 * 60 * 24 * 7,
+		default: Date.now
 	}
 });
 

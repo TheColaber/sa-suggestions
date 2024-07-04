@@ -8,7 +8,14 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
 	const content = data.get('content');
 	const attachments = data.get('attachments');
 
-	if (!locals.user) error(400, 'user not logged in');
+	if (!locals.user) return error(400, 'user not logged in');
+
+	if (String(title).length > 100) {
+		return error(400, "title too long. max 100 characters")
+	}
+	if (String(title).length > 1000) {
+		return error(400, "title too long. max 1000 characters")
+	}
 	const author = locals.user.username;
 
 	const idea = new Idea({ title, content, author });

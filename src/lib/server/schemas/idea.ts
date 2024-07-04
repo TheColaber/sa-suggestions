@@ -5,6 +5,7 @@ type IdeaT = {
 	content: string;
 	author: string;
 	upvotes: string[];
+  createdAt: Date;
 };
 
 const MODEL = 'Idea';
@@ -26,6 +27,10 @@ const IdeaSchema = new mongoose.Schema<IdeaT>({
 		default() {
 			return [this.author];
 		}
+	},
+  createdAt: {
+		type: Date,
+		default: Date.now
 	}
 });
 

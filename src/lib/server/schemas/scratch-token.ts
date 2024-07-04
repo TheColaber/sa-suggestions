@@ -6,6 +6,12 @@ const ScratchTokenSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 		default: () => crypto.randomUUID()
+	},
+  createdAt: {
+		type: Date,
+		// 3 Minutes
+		expires: 1000 * 60 * 3,
+		default: Date.now
 	}
 });
 

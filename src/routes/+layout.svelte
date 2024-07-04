@@ -152,6 +152,7 @@
 					position: fixed;
 					transform: translateY(66%);
 					background-color: #ff7b26;
+					z-index: 2;
 
 					&.show {
 						display: flex;

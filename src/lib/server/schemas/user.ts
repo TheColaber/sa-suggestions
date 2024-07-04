@@ -7,7 +7,11 @@ const UserSchema = new mongoose.Schema({
 		required: true,
 		type: String
 	},
-	oauthMethods: [String]
+	oauthMethods: [String],
+  createdAt: {
+		type: Date,
+		default: Date.now
+	}
 });
 
 if (MODEL in mongoose.models) {
