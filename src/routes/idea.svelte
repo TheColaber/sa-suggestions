@@ -49,11 +49,16 @@
 		flex-direction: column;
 		text-decoration: none;
 		color: #fff;
+    // TODO: I hate this.
+    width: 0px;
 
 		.info {
 			.title {
 				font-weight: bold;
 				font-size: 28px;
+        text-overflow: ellipsis;
+        display: block;
+        overflow: hidden;
 			}
 
 			.author {
