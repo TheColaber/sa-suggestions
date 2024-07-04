@@ -17,9 +17,10 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
   return json({ id: idea.id })
 };
 
-export const GET: RequestHandler = async ({ url }) => {
+export const GET: RequestHandler = async ({ url, locals }) => {
   const mode = url.searchParams.get("mode")
   const ideas = await Idea.find();
+  // TODO: Merge with GET `/idea/[id]`
   const mapped = ideas.map(({ title, author, content, upvotes, id }) => (
     {
       title, 
@@ -27,6 +28,7 @@ export const GET: RequestHandler = async ({ url }) => {
       id, 
       author,
       upvotes: upvotes.length,
+      selfUpvoted: locals.user && upvotes.includes(locals.user.username)
     }
   ));
   if (mode === "top") {

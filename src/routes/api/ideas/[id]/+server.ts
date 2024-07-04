@@ -7,11 +7,13 @@ export const GET: RequestHandler = async ({ locals, request, params }) => {
   const idea = await Idea.findOne({ _id: id });
   if (!idea) return error(404, "not found")
   const { title, author, content, upvotes } = idea;
+
   return json({
     id,
     title,
     author,
     content,
     upvotes: upvotes.length,
+    selfUpvoted: locals.user && idea.upvotes.includes(locals.user.username)
   })
 };

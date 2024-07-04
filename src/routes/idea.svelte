@@ -1,5 +1,5 @@
 <button class="upvote" on:click={() => toggleUpvote(idea)}>
-  <img src="/upvote{upvotes[idea.id] ? "-filled" : ""}.svg" alt="" />
+  <img src="/upvote{idea.selfUpvoted ? "-filled" : ""}.svg" alt="" />
   <span>{idea.upvotes}</span>
 </button>
 <a href="/idea/{idea.id}" class="details">
@@ -12,15 +12,14 @@
 
 <script lang="ts">
 	export let idea: any;
-	export let upvotes: any;  
 
   async function toggleUpvote(idea: any) {
     const response = await fetch("/api/ideas/" + idea.id + "/upvote", {
       method: "POST",
-      body: JSON.stringify(!upvotes[idea.id])
+      body: JSON.stringify(!idea.selfUpvoted)
     });
     const newValue = await response.json();
-    upvotes[idea.id] = newValue;
+    idea.selfUpvoted = newValue;
 
     if (newValue)
     idea.upvotes += 1

@@ -1,5 +1,5 @@
 <div class="idea">
-  <Idea idea={data.idea} upvotes={{ [data.idea.id]: data.upvote}} />
+  <Idea idea={data.idea} />
 </div>
 
 <script lang="ts">

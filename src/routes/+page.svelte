@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto, invalidate } from '$app/navigation';
+	import { goto } from '$app/navigation';
 import type { PageData } from './$types';
 	import Idea from './idea.svelte';
 
@@ -22,7 +22,7 @@ import type { PageData } from './$types';
   </div>
   {#each data.ideas as idea}
     <div class="idea">
-      <Idea idea={idea} upvotes={data.upvotes} />
+      <Idea idea={idea} />
     </div>
   {/each}
 </div>
