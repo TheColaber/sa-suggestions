@@ -29,13 +29,13 @@ export const GET: RequestHandler = async ({ url, locals }) => {
 	let ideas = await Idea.find();
 
 	if (mode === 'top') {
-		ideas = ideas.sort((a, b) => b.upvotes.length - a.upvotes.length)
+		ideas = ideas.sort((a, b) => b.upvotes.length - a.upvotes.length);
 	} else if (mode === 'new') {
-		ideas = ideas.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+		ideas = ideas.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
 	} else if (mode === 'reccomended') {
-		ideas = ideas.sort(() => 0.5 - Math.random())
-		ideas = ideas.sort(() => 0.5 - Math.random())
-		ideas = ideas.sort(() => 0.5 - Math.random())
+		ideas = ideas.sort(() => 0.5 - Math.random());
+		ideas = ideas.sort(() => 0.5 - Math.random());
+		ideas = ideas.sort(() => 0.5 - Math.random());
 	}
 
 	// TODO: Merge with GET `/idea/[id]`

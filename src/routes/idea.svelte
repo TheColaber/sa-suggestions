@@ -54,14 +54,17 @@
 		color: #fff;
 		// TODO: I hate this.
 		width: 0px;
+		gap: 5px;
 
 		.info {
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+
 			.title {
 				font-weight: bold;
 				font-size: 28px;
-				text-overflow: ellipsis;
-				display: block;
-				overflow: hidden;
+				line-height: 22px;
 			}
 
 			.author {

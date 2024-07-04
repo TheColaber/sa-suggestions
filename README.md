@@ -1,4 +1,4 @@
-# scratch addons addon suggestions
+# scratch addons addon ideas
 
 todo:
 
@@ -13,4 +13,3 @@ todo:
 - Search
 - Icons
 - Reccomended Sort
-- Newest Sort
