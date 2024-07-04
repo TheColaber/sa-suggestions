@@ -17,7 +17,8 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
   return json({ id: idea.id })
 };
 
-export const GET: RequestHandler = async ({ url, cookies, request }) => {
+export const GET: RequestHandler = async ({ url }) => {
+  const mode = url.searchParams.get("mode")
   const ideas = await Idea.find();
   const mapped = ideas.map(({ title, author, content, upvotes, id }) => (
     {
@@ -27,6 +28,9 @@ export const GET: RequestHandler = async ({ url, cookies, request }) => {
       author,
       upvotes: upvotes.length,
     }
-  ))
+  ));
+  if (mode === "top") {
+    return json(mapped.sort((a, b) => b.upvotes - a.upvotes));
+  } 
   return json(mapped);
 }

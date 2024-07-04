@@ -23,8 +23,5 @@ export const POST: RequestHandler = async ({ locals, request, params }) => {
     idea.upvotes.splice(idea.upvotes.indexOf(username), 1)
   }
   await idea.save();
-  // const idea = await Idea.findOne({ _id: id });
-  // if (!idea) return error(404, "not found")
-  //   if (!locals.user) return error(400, "not logged in")
   return json(idea.upvotes.includes(locals.user.username))
 };

@@ -22,7 +22,7 @@ const IdeaSchema = new mongoose.Schema<IdeaT>({
     required: true
   },
   upvotes: {
-    type: mongoose.Schema.Types.Mixed,
+    type: [String],
     default() { return [this.author] }
   }
 });

@@ -59,7 +59,7 @@
 
 <style lang="scss">
 	.main {
-		height: 100vh;
+		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
     align-items: center;
@@ -72,9 +72,6 @@
 			display: flex;
 			width: 100%;
 			justify-content: center;
-			flex-direction: column;
-			gap: 15px;
-			align-items: center;
 		}
 
 		.header {

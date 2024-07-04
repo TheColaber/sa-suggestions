@@ -10,3 +10,4 @@ todo:
 - Linking Github PRs
 - Link multiple accounts thru settings
 - Search
+- Icons
