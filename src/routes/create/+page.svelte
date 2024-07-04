@@ -1,6 +1,6 @@
 <script lang="ts">
-	let content = "";
-	$: charactersLeft = 1000 - content.length
+	let content = '';
+	$: charactersLeft = 1000 - content.length;
 </script>
 
 <form method="POST" class="form">
@@ -15,8 +15,12 @@
 				maxlength="100"
 			/>
 			<textarea
-			name="content" id="content" class="content-area" maxlength="1000"
-			bind:value={content}></textarea>
+				name="content"
+				id="content"
+				class="content-area"
+				maxlength="1000"
+				bind:value={content}
+			></textarea>
 		</div>
 		<div class="bar">
 			<span>{charactersLeft} Characters left</span>
