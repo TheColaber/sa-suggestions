@@ -3,7 +3,7 @@ import type { RequestHandler } from './$types';
 import { Idea } from '$lib/server/db';
 
 export const PUT: RequestHandler = async ({ locals, request }) => {
-  const data = await (request.formData());
+  const data = await request.formData();
   const title = data.get("title");
   const content = data.get("content");
   const attachments = data.get("attachments");

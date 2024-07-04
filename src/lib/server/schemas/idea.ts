@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 
+type IdeaT = {
+  title: string;
+  content: string;
+  author: string;
+  upvotes: string[]
+}
+
 const MODEL = "Idea";
-const IdeaSchema = new mongoose.Schema({
+const IdeaSchema = new mongoose.Schema<IdeaT>({
   title: {
     type: String,
     required: true
@@ -14,7 +21,10 @@ const IdeaSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  upvotes: [String]
+  upvotes: {
+    type: mongoose.Schema.Types.Mixed,
+    default() { return [this.author] }
+  }
 });
 
 if (MODEL in mongoose.models) {
