@@ -11,10 +11,10 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
 	if (!locals.user) return error(400, 'user not logged in');
 
 	if (String(title).length > 100) {
-		return error(400, "title too long. max 100 characters")
+		return error(400, 'title too long. max 100 characters');
 	}
 	if (String(title).length > 1000) {
-		return error(400, "title too long. max 1000 characters")
+		return error(400, 'title too long. max 1000 characters');
 	}
 	const author = locals.user.username;
 

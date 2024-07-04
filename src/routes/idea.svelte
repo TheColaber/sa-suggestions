@@ -1,12 +1,12 @@
 <script lang="ts">
 	export let idea: any;
 
-  let timeout = Date.now();
+	let timeout = Date.now();
 
 	async function toggleUpvote(idea: any) {
-    if (Date.now() - timeout < 100) return;
-    timeout = Date.now()
-    const newValue = !idea.selfUpvoted;
+		if (Date.now() - timeout < 100) return;
+		timeout = Date.now();
+		const newValue = !idea.selfUpvoted;
 		fetch('/api/ideas/' + idea.id + '/upvote', {
 			method: 'POST',
 			body: JSON.stringify(newValue)
@@ -52,16 +52,16 @@
 		flex-direction: column;
 		text-decoration: none;
 		color: #fff;
-    // TODO: I hate this.
-    width: 0px;
+		// TODO: I hate this.
+		width: 0px;
 
 		.info {
 			.title {
 				font-weight: bold;
 				font-size: 28px;
-        text-overflow: ellipsis;
-        display: block;
-        overflow: hidden;
+				text-overflow: ellipsis;
+				display: block;
+				overflow: hidden;
 			}
 
 			.author {
@@ -71,6 +71,8 @@
 
 		.content {
 			font-weight: 350;
+			max-height: 106px;
+			overflow: hidden;
 		}
 	}
 </style>

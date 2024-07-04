@@ -56,7 +56,7 @@
 </div>
 
 <svelte:head>
-	<title>Addon Ideas | Scratch Addons</title> 
+	<title>Addon Ideas | Scratch Addons</title>
 </svelte:head>
 
 <style lang="scss">

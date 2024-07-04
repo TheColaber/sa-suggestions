@@ -24,23 +24,24 @@
 			<button class:selected={data.mode === 'new'} on:click={() => setMode('new')}>Newest</button>
 		</div>
 	</div>
-	{#each data.ideas as idea}
-		<div class="idea">
-			<Idea {idea} />
-		</div>
-	{/each}
+	<div class="ideas">
+		{#each data.ideas as idea}
+			<div class="idea">
+				<Idea {idea} />
+			</div>
+		{/each}
+	</div>
 </div>
 
 <style lang="scss">
 	.container {
 		display: flex;
 		flex-direction: column;
-		justify-content: center;
 		align-items: center;
-		gap: 15px;
 		width: min(800px, 100%);
 		height: fit-content;
 		padding: 0px 20px 20px 20px;
+		box-sizing: border-box;
 
 		.options {
 			display: flex;
@@ -53,6 +54,16 @@
 			z-index: 1;
 			padding: 20px;
 
+			@media only screen and (max-width: 550px) {
+				& {
+					flex-direction: column;
+
+					.sort button {
+						flex: 1;
+					}
+				}
+			}
+
 			.search {
 				font-size: 24px;
 				outline: none;
@@ -61,7 +72,8 @@
 				font-family: inherit;
 				border: 2px solid #fff;
 				flex: 1;
-				max-width: 450px;
+				max-width: 550px;
+				min-width: 0px;
 				border-radius: 6px;
 				padding: 4px 10px;
 			}
@@ -69,6 +81,7 @@
 			.sort {
 				display: flex;
 				gap: 6px;
+				height: 44px;
 
 				button {
 					background: #222;
@@ -84,15 +97,22 @@
 			}
 		}
 
-		.idea {
-			width: 100%;
+		.ideas {
 			display: flex;
-			background: #181818;
-			padding: 15px;
-			border: 2px solid #fff;
-			border-radius: 10px;
-			gap: 10px;
-			box-sizing: border-box;
+			flex-direction: column;
+			width: 100%;
+			gap: 15px;
+
+			.idea {
+				width: 100%;
+				display: flex;
+				background: #181818;
+				padding: 15px;
+				border: 2px solid #fff;
+				border-radius: 10px;
+				gap: 10px;
+				box-sizing: border-box;
+			}
 		}
 	}
 </style>

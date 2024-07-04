@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
 		type: String
 	},
 	oauthMethods: [String],
-  createdAt: {
+	createdAt: {
 		type: Date,
 		default: Date.now
 	}
