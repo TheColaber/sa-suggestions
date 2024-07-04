@@ -26,18 +26,28 @@ export const PUT: RequestHandler = async ({ locals, request }) => {
 
 export const GET: RequestHandler = async ({ url, locals }) => {
 	const mode = url.searchParams.get('mode');
-	const ideas = await Idea.find();
+	let ideas = await Idea.find();
+
+	if (mode === 'top') {
+		ideas = ideas.sort((a, b) => b.upvotes.length - a.upvotes.length)
+	} else if (mode === 'new') {
+		ideas = ideas.sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime())
+	} else if (mode === 'reccomended') {
+		ideas = ideas.sort(() => 0.5 - Math.random())
+		ideas = ideas.sort(() => 0.5 - Math.random())
+		ideas = ideas.sort(() => 0.5 - Math.random())
+	}
+
 	// TODO: Merge with GET `/idea/[id]`
-	const mapped = ideas.map(({ title, author, content, upvotes, id }) => ({
+	const mapped = ideas.map(({ title, author, content, upvotes, id, createdAt }) => ({
 		title,
 		content,
 		id,
 		author,
 		upvotes: upvotes.length,
-		selfUpvoted: locals.user && upvotes.includes(locals.user.username)
+		selfUpvoted: locals.user && upvotes.includes(locals.user.username),
+		createdAt
 	}));
-	if (mode === 'top') {
-		return json(mapped.sort((a, b) => b.upvotes - a.upvotes));
-	}
+
 	return json(mapped);
 };
