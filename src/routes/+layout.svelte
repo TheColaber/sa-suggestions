@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { page } from '$app/stores';  
-	 
+	import { page } from '$app/stores';
+
 	export let data: PageData;
 
 	let showProfileDropdown = false;
@@ -22,7 +22,7 @@
 			<a href="/">Explore Ideas</a>
 			<div class="dropdown-container">
 				<button on:click|preventDefault={toggleProfileDropdown}>
-					<img class="icon" src="/github.svg" alt="">
+					<img class="icon" src="/github.svg" alt="" />
 					{data.user.username}
 				</button>
 				<div class="dropdown" class:show={showProfileDropdown}>
@@ -35,25 +35,23 @@
 		<div class="content">
 			<slot />
 		</div>
-	{:else}
-	{#if $page.url.pathname === "/login/scratch"}
+	{:else if $page.url.pathname === '/login/scratch'}
 		<slot />
 	{:else}
-	<div class="login-options" data-sveltekit-preload-data="false">
-		<a href="/login/github" class="github">
-			<img src="/github.svg" alt="" />
-			<span>Login with Github</span>
-		</a>
-		<a href="/login/discord" class="discord">
-			<img src="/discord.svg" alt="" />
-			<span>Login With Discord</span>
-		</a>
-		<a href="/login/scratch" class="scratch">
-			<img src="/scratch.svg" alt="" />
-			<span>Login with Scratch</span>
-		</a>
-	</div>
-{/if}
+		<div class="login-options" data-sveltekit-preload-data="false">
+			<a href="/login/github" class="github">
+				<img src="/github.svg" alt="" />
+				<span>Login with Github</span>
+			</a>
+			<a href="/login/discord" class="discord">
+				<img src="/discord.svg" alt="" />
+				<span>Login With Discord</span>
+			</a>
+			<a href="/login/scratch" class="scratch">
+				<img src="/scratch.svg" alt="" />
+				<span>Login with Scratch</span>
+			</a>
+		</div>
 	{/if}
 </div>
 
@@ -62,8 +60,8 @@
 		min-height: 100vh;
 		display: flex;
 		flex-direction: column;
-    align-items: center;
-    background: #1e1e1e;
+		align-items: center;
+		background: #1e1e1e;
 		color: #fff;
 
 		.content {
@@ -83,7 +81,7 @@
 			align-items: center;
 			width: 100%;
 			box-sizing: border-box;
-			
+
 			.title {
 				font-size: 32px;
 				font-weight: 500;
@@ -100,7 +98,8 @@
 			background-color: #ff7b26;
 			width: 100%;
 
-			a, .dropdown-container {
+			a,
+			.dropdown-container {
 				width: 150px;
 				display: flex;
 				justify-content: center;
@@ -108,7 +107,8 @@
 				height: 40px;
 			}
 
-			a, button {
+			a,
+			button {
 				color: #fff;
 				text-decoration: none;
 				font-size: 18px;
@@ -173,7 +173,7 @@
 				padding: 20px 14px;
 				font-size: 20px;
 				font-weight: 600;
-        text-decoration: none;
+				text-decoration: none;
 				border-radius: 4px;
 
 				span {
@@ -183,9 +183,9 @@
 				}
 
 				img {
-          width: 35px;
-          height: 28px;
-          object-fit: contain;
+					width: 35px;
+					height: 28px;
+					object-fit: contain;
 				}
 
 				&:first-child {

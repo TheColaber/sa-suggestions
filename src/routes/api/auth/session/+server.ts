@@ -10,7 +10,7 @@ export const GET: RequestHandler = ({ locals }) => {
 };
 
 export const DELETE: RequestHandler = ({ cookies }) => {
-  cookies.delete("token", {path: "/"})  
+	cookies.delete('token', { path: '/' });
 
-	return json({ ok: true })
+	return json({ ok: true });
 };

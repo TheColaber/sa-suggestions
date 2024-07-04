@@ -1,6 +1,7 @@
 # scratch addons addon suggestions
 
 todo:
+
 - Storing images of addon ideas
 - Tagging addon ideas
 - Profiles
