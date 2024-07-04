@@ -6,9 +6,11 @@ import { Idea } from './schemas/idea';
 import { User } from './schemas/user';
 import { ScratchToken } from './schemas/scratch-token';
 
-mongoose.connect(
-	`mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@sa-suggestions.jitrni9.mongodb.net/?retryWrites=true&w=majority&appName=SA-Suggestions`
-);
+export function connect() {  
+  mongoose.connect(
+    `mongodb+srv://${MONGODB_USER}:${MONGODB_PASS}@sa-suggestions.jitrni9.mongodb.net/?retryWrites=true&w=majority&appName=SA-Suggestions`
+  );
+}
 
 export { User, Session, Idea, ScratchToken };
 

@@ -55,6 +55,10 @@
 	{/if}
 </div>
 
+<svelte:head>
+	<title>Addon Ideas | Scratch Addons</title> 
+</svelte:head>
+
 <style lang="scss">
 	.main {
 		height: 100vh;
