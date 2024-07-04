@@ -2,13 +2,12 @@
 	export let idea: any;
 
 	async function toggleUpvote(idea: any) {
-		const response = await fetch('/api/ideas/' + idea.id + '/upvote', {
+    const newValue = !idea.selfUpvoted;
+		fetch('/api/ideas/' + idea.id + '/upvote', {
 			method: 'POST',
-			body: JSON.stringify(!idea.selfUpvoted)
+			body: JSON.stringify(newValue)
 		});
-		const newValue = await response.json();
 		idea.selfUpvoted = newValue;
-
 		if (newValue) idea.upvotes += 1;
 		else idea.upvotes -= 1;
 	}

@@ -12,3 +12,5 @@ todo:
 - Link multiple accounts thru settings
 - Search
 - Icons
+- Reccomended Sort
+- Newest Sort
