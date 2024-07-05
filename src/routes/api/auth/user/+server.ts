@@ -48,10 +48,10 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			// user.email
 
 			const userSuccess = await createUser(username, 'github');
-			if (userSuccess) {
+			if (userSuccess.ok) {
 				await createSession(cookies, username);
 			}
-			return json({ ok: userSuccess });
+			return userSuccess;
 		}
 
 		return json(data);
@@ -88,10 +88,10 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.id}.png`;
 
 			const userSuccess = await createUser(username, 'discord');
-			if (userSuccess) {
+			if (userSuccess.ok) {
 				await createSession(cookies, username);
 			}
-			return json({ ok: userSuccess });
+			return userSuccess;
 		}
 	} else if (oauthMethod === 'scratch') {
 		const response = await fetch(
@@ -103,10 +103,10 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 		const username = codeComment.author.username;
 		// codeComment.author.image
 		const userSuccess = await createUser(username, 'scratch');
-		if (userSuccess) {
+		if (userSuccess.ok) {
 			await createSession(cookies, username);
 		}
-		return json({ ok: userSuccess });
+		return userSuccess;
 	}
 	return json({});
 };

@@ -3,6 +3,7 @@
 	import type { PageData } from './$types';
 
 	let loading = false;
+	let error: number | boolean = false
 	export let data: PageData;
 
 	async function loginWithToken() {
@@ -14,6 +15,10 @@
 			method: 'PUT',
 			body: body.toString()
 		});
+		if (response.status === 409) {
+			error = 409;
+			return
+		}
 		const user = await response.json();
 		if (user.ok) {
 			invalidate('/api/auth/session');
@@ -24,7 +29,11 @@
 	}
 </script>
 
-{#if loading}
+{#if error === 409}
+Username already exists in a different authentication method.
+Try logging in through a different authentication method.
+You can add other authentication methods on your account through settings.
+{:else if loading}
 	Loading...
 {:else}
 	Copy this code: "{data.scratchToken}" and comment it on

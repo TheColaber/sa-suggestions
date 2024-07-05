@@ -1,4 +1,4 @@
-import type { Cookies } from '@sveltejs/kit';
+import { error, json, type Cookies } from '@sveltejs/kit';
 import { MONGODB_USER, MONGODB_PASS } from '$env/static/private';
 import mongoose from 'mongoose';
 import { Session } from './schemas/session';
@@ -19,16 +19,16 @@ export async function createUser(username: string, oauthMethod: string) {
 
 	if (existingUser) {
 		if (existingUser.oauthMethods.includes(oauthMethod)) {
-			return true;
+			return json({ ok: true });
 		}
-		return false;
+		return error(409, "Username already exists in a different authentication method.")
 	}
 	const newUser = new User({
 		oauthMethods: [oauthMethod],
 		username
 	});
 	await newUser.save();
-	return true;
+	return json({ ok: true });
 }
 
 export async function createSession(cookies: Cookies, username: string) {
