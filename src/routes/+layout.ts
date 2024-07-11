@@ -1,8 +1,8 @@
 import type { LayoutLoad } from './$types';
-import { inject } from '@vercel/analytics'
+import { inject } from '@vercel/analytics';
 import { injectSpeedInsights } from '@vercel/speed-insights/sveltekit';
 
-inject()
+inject();
 injectSpeedInsights();
 export const load: LayoutLoad = async ({ fetch }) => {
 	const response = await fetch('/api/auth/session');

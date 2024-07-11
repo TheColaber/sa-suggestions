@@ -3,7 +3,7 @@
 	import type { PageData } from './$types';
 
 	let loading = false;
-	let error: number | boolean = false
+	let error: number | boolean = false;
 	export let data: PageData;
 
 	async function loginWithToken() {
@@ -17,7 +17,7 @@
 		});
 		if (response.status === 409) {
 			error = 409;
-			return
+			return;
 		}
 		const user = await response.json();
 		if (user.ok) {
@@ -30,9 +30,8 @@
 </script>
 
 {#if error === 409}
-Username already exists in a different authentication method.
-Try logging in through a different authentication method.
-You can add other authentication methods on your account through settings.
+	Username already exists in a different authentication method. Try logging in through a different
+	authentication method. You can add other authentication methods on your account through settings.
 {:else if loading}
 	Loading...
 {:else}

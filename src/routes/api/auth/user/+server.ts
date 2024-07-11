@@ -1,14 +1,15 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
 import { createSession, createUser } from '$lib/server/db';
+import {
+	GITHUB_CLIENT_ID,
+	GITHUB_CLIENT_SECRET,
+	DISCORD_CLIENT_ID,
+	DISCORD_CLIENT_SECRET
+} from '$env/static/private';
 
 const GITHUB_TOKEN_ACCESS_URL = 'https://github.com/login/oauth/access_token';
-const GITHUB_CLIENT_SECRET = '3e227e5ff3ab9dadfe879817acb2d0afffff7978';
-const GITHUB_CLIENT_ID = 'Ov23liZxB5WZVqEt7Gja';
-
 const DISCORD_TOKEN_ACCESS_URL = 'https://discord.com/api/oauth2/token';
-const DISCORD_CLIENT_SECRET = 'LCyxP4lZFZlX_jDNz2h1jpHPTtlm1FXZ';
-const DISCORD_CLIENT_ID = '1257846856717832332';
 
 export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => {
 	const body = await request.text();
@@ -83,7 +84,7 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 				}
 			});
 			const user = await response.json();
-			const { username } = user;			
+			const { username } = user;
 			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
 			const userSuccess = await createUser(username, 'discord', icon);
@@ -104,7 +105,7 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 		if (userSuccess.ok) {
 			await createSession(cookies, username);
 		}
-		
+
 		return userSuccess;
 	}
 	return json({});

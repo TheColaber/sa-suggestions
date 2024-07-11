@@ -27,7 +27,7 @@ export const load: PageLoad = async ({ url, fetch }) => {
 	discordOAuthURL.searchParams.append('client_id', CLIENT_ID);
 	discordOAuthURL.searchParams.append('response_type', 'code');
 	discordOAuthURL.searchParams.append('redirect_uri', url.origin + url.pathname);
-	discordOAuthURL.searchParams.append('scope', 'identify');	
+	discordOAuthURL.searchParams.append('scope', 'identify');
 	if (browser) {
 		window.location.href = discordOAuthURL.toString();
 	} else {

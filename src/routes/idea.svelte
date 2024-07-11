@@ -19,7 +19,7 @@
 </script>
 
 <div class="left">
-	<img src="/api/auth/user/{idea.author}/avatar" class="icon" alt="">
+	<img src="/api/auth/user/{idea.author}/avatar" class="icon" alt="" />
 	<button class="upvote" on:click={() => toggleUpvote(idea)}>
 		<img src="/upvote{idea.selfUpvoted ? '-filled' : ''}.svg" alt="" />
 		<span>{idea.upvotes}</span>
@@ -35,9 +35,9 @@
 			<!-- <button on:click|preventDefault={() => showOptions = !showOptions}>
 				<img src="/dots.svg" class="icon" alt="">
 			</button> -->
-			<div class="dropdown">
+			<!-- <div class="dropdown">
 				<button class="option">Report (doesnt work)</button>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<span class="content">{idea.content}</span>
@@ -52,22 +52,21 @@
 			height: 48px;
 		}
 		.upvote {
-		padding: 0px;
-		background: none;
-		border: none;
-		display: flex;
-		height: fit-content;
-		flex-direction: column;
-		align-items: center;
-		color: inherit;
-		font-family: inherit;
-		font-size: 18px;
-		img {
-			filter: invert(1);
+			padding: 0px;
+			background: none;
+			border: none;
+			display: flex;
+			height: fit-content;
+			flex-direction: column;
+			align-items: center;
+			color: inherit;
+			font-family: inherit;
+			font-size: 18px;
+			img {
+				filter: invert(1);
+			}
 		}
 	}
-	}
-
 
 	.details {
 		flex: 1;
@@ -84,44 +83,44 @@
 			justify-content: space-between;
 
 			.info {
-			display: flex;
-			flex-direction: column;
-			overflow: hidden;
-
-			.title {
-				font-weight: bold;
-				font-size: 28px;
-				line-height: 22px;
-			}
-
-			.author {
-				color: #ef8b4a;
-			}
-		}
-		.options {
-			display: flex;
-			// button {
-			// 	padding: 0px;
-			// 	background: 0px;
-			// 	border: none;
-			// 	display: flex;
-			// 	.icon {
-			// 	filter: invert(1);
-			// 	height: 24px;
-			// }
-			// }
-			.dropdown {
 				display: flex;
-				.option {
-				padding: 0px;
-				background: 0px;
-				border: none;
-				display: flex;
-				color: inherit;
-				font-family: inherit;
-		}
+				flex-direction: column;
+				overflow: hidden;
+
+				.title {
+					font-weight: bold;
+					font-size: 28px;
+					line-height: 22px;
+				}
+
+				.author {
+					color: #ef8b4a;
+				}
 			}
-		}
+			.options {
+				display: flex;
+				// button {
+				// 	padding: 0px;
+				// 	background: 0px;
+				// 	border: none;
+				// 	display: flex;
+				// 	.icon {
+				// 	filter: invert(1);
+				// 	height: 24px;
+				// }
+				// }
+				// 	.dropdown {
+				// 		display: flex;
+				// 		.option {
+				// 		padding: 0px;
+				// 		background: 0px;
+				// 		border: none;
+				// 		display: flex;
+				// 		color: inherit;
+				// 		font-family: inherit;
+				// }
+				//	}
+			}
 		}
 
 		.content {

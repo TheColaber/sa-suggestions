@@ -5,7 +5,7 @@ const ScratchTokenSchema = new mongoose.Schema({
 	token: {
 		type: String,
 		required: true,
-		default: () => crypto.randomUUID().substring(0,8)
+		default: () => crypto.randomUUID().substring(0, 8)
 	},
 	createdAt: {
 		type: Date,

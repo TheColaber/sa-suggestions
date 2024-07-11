@@ -5,7 +5,7 @@ import { Session } from './schemas/session';
 import { Idea } from './schemas/idea';
 import { User } from './schemas/user';
 import { ScratchToken } from './schemas/scratch-token';
-import { put } from "@vercel/blob";
+import { put } from '@vercel/blob';
 import { BLOB_READ_WRITE_TOKEN } from '$env/static/private';
 
 export function connect() {
@@ -23,19 +23,22 @@ export async function createUser(username: string, oauthMethod: string, imageUrl
 		if (existingUser.oauthMethods.includes(oauthMethod)) {
 			return json({ ok: true });
 		}
-		return error(409, "Username already exists in a different authentication method.")
+		return error(409, 'Username already exists in a different authentication method.');
 	}
 
-	const imageBlob = await fetch(imageUrl).then(response => response.blob());	
+	const imageBlob = await fetch(imageUrl).then((response) => response.blob());
 
-	const ending = imageBlob.type==="image/png"? ".png" : ""
-	const {url} = await put(username + ending, imageBlob, { access: "public", token: BLOB_READ_WRITE_TOKEN });	
+	const ending = imageBlob.type === 'image/png' ? '.png' : '';
+	const { url } = await put(username + ending, imageBlob, {
+		access: 'public',
+		token: BLOB_READ_WRITE_TOKEN
+	});
 	const newUser = new User({
 		oauthMethods: [oauthMethod],
 		username,
 		avatar: url
 	});
-	
+
 	await newUser.save();
 	return json({ ok: true });
 }
