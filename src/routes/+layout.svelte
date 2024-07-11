@@ -18,7 +18,7 @@
 	</div>
 	{#if data.loggedIn}
 		<div class="navbar">
-			<a href="/create">Create Idea</a>
+			<a href="/idea/create">Create Idea</a>
 			<a href="/">Explore Ideas</a>
 			<div class="dropdown-container">
 				<button on:click|preventDefault={toggleProfileDropdown}>
