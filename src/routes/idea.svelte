@@ -17,10 +17,13 @@
 	}
 </script>
 
-<button class="upvote" on:click={() => toggleUpvote(idea)}>
-	<img src="/upvote{idea.selfUpvoted ? '-filled' : ''}.svg" alt="" />
-	<span>{idea.upvotes}</span>
-</button>
+<div class="left">
+	<img src="/api/auth/user/{idea.author}/avatar" class="icon" alt="">
+	<button class="upvote" on:click={() => toggleUpvote(idea)}>
+		<img src="/upvote{idea.selfUpvoted ? '-filled' : ''}.svg" alt="" />
+		<span>{idea.upvotes}</span>
+	</button>
+</div>
 <a href="/idea/{idea.id}" class="details">
 	<div class="info">
 		<span class="title">{idea.title}</span>
@@ -30,8 +33,15 @@
 </a>
 
 <style lang="scss">
-	.upvote {
-		padding: 8px 0px;
+	.left {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+		.icon {
+			height: 48px;
+		}
+		.upvote {
+		padding: 0px;
 		background: none;
 		border: none;
 		display: flex;
@@ -45,6 +55,8 @@
 			filter: invert(1);
 		}
 	}
+	}
+
 
 	.details {
 		flex: 1;
