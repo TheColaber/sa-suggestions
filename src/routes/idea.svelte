@@ -2,6 +2,7 @@
 	export let idea: any;
 
 	let timeout = Date.now();
+	let showOptions = false;
 
 	async function toggleUpvote(idea: any) {
 		if (Date.now() - timeout < 100) return;
@@ -25,9 +26,19 @@
 	</button>
 </div>
 <a href="/idea/{idea.id}" class="details">
-	<div class="info">
-		<span class="title">{idea.title}</span>
-		<span class="author">by {idea.author}</span>
+	<div class="top">
+		<div class="info">
+			<span class="title">{idea.title}</span>
+			<span class="author">by {idea.author}</span>
+		</div>
+		<div class="options">
+			<!-- <button on:click|preventDefault={() => showOptions = !showOptions}>
+				<img src="/dots.svg" class="icon" alt="">
+			</button> -->
+			<div class="dropdown">
+				<button class="option">Report (doesnt work)</button>
+			</div>
+		</div>
 	</div>
 	<span class="content">{idea.content}</span>
 </a>
@@ -68,7 +79,11 @@
 		width: 0px;
 		gap: 5px;
 
-		.info {
+		.top {
+			display: flex;
+			justify-content: space-between;
+
+			.info {
 			display: flex;
 			flex-direction: column;
 			overflow: hidden;
@@ -82,6 +97,31 @@
 			.author {
 				color: #ef8b4a;
 			}
+		}
+		.options {
+			display: flex;
+			// button {
+			// 	padding: 0px;
+			// 	background: 0px;
+			// 	border: none;
+			// 	display: flex;
+			// 	.icon {
+			// 	filter: invert(1);
+			// 	height: 24px;
+			// }
+			// }
+			.dropdown {
+				display: flex;
+				.option {
+				padding: 0px;
+				background: 0px;
+				border: none;
+				display: flex;
+				color: inherit;
+				font-family: inherit;
+		}
+			}
+		}
 		}
 
 		.content {

@@ -2,13 +2,13 @@
 
 todo:
 
-- Storing images of addon ideas
-- Tagging addon ideas
+- Storing images
+- Tagging ideas
 - Profiles
 - Editing your ideas
 - Admin/Mod Power
 - Commenting on ideas
-- Linking Github PRs
 - Link multiple accounts thru settings
 - Search
 - Reccomended Sort
+- Switch to vercel SQL
