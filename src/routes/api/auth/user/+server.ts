@@ -1,6 +1,6 @@
 import { error, json } from '@sveltejs/kit';
 import type { RequestHandler } from './$types';
-import { User, createSession, createUser } from '$lib/server/db';
+import { createSession, createUser } from '$lib/server/db';
 
 const GITHUB_TOKEN_ACCESS_URL = 'https://github.com/login/oauth/access_token';
 const GITHUB_CLIENT_SECRET = '3e227e5ff3ab9dadfe879817acb2d0afffff7978';
@@ -44,10 +44,9 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 			});
 			const user = await response.json();
 			const username = user.login;
-			// console.log(user.avatar_url);
 			// user.email
 
-			const userSuccess = await createUser(username, 'github');
+			const userSuccess = await createUser(username, 'github', user.avatar_url);
 			if (userSuccess.ok) {
 				await createSession(cookies, username);
 			}
@@ -84,10 +83,10 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 				}
 			});
 			const user = await response.json();
-			const { username } = user;
-			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.id}.png`;
+			const { username } = user;			
+			const icon = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
-			const userSuccess = await createUser(username, 'discord');
+			const userSuccess = await createUser(username, 'discord', icon);
 			if (userSuccess.ok) {
 				await createSession(cookies, username);
 			}
@@ -101,11 +100,11 @@ export const PUT: RequestHandler = async ({ url, cookies, locals, request }) => 
 		const codeComment = comments.find(({ content }: { content: string }) => content.includes(code));
 		if (!codeComment) return error(400, 'could not find comment');
 		const username = codeComment.author.username;
-		// codeComment.author.image
-		const userSuccess = await createUser(username, 'scratch');
+		const userSuccess = await createUser(username, 'scratch', codeComment.author.image);
 		if (userSuccess.ok) {
 			await createSession(cookies, username);
 		}
+		
 		return userSuccess;
 	}
 	return json({});

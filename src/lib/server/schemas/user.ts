@@ -11,7 +11,8 @@ const UserSchema = new mongoose.Schema({
 	createdAt: {
 		type: Date,
 		default: Date.now
-	}
+	},
+	avatar: String
 });
 
 if (MODEL in mongoose.models) {

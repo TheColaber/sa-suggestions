@@ -22,7 +22,7 @@
 			<a href="/">Explore Ideas</a>
 			<div class="dropdown-container">
 				<button on:click|preventDefault={toggleProfileDropdown}>
-					<img class="icon" src="/github.svg" alt="" />
+					<img class="icon" src="/api/auth/user/{data.user.username}/avatar" alt="" />
 					{data.user.username}
 				</button>
 				<div class="dropdown" class:show={showProfileDropdown}>
@@ -143,7 +143,7 @@
 					justify-content: center;
 
 					.icon {
-						height: 20px;
+						height: 36px;
 					}
 				}
 
